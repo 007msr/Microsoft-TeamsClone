@@ -45,7 +45,7 @@ navigator.mediaDevices.getUserMedia({
 
   socket.on('user-joined', (username) => {
    // console.log("user-name: " + username);
-    $('ul').append(`<b>${username}</b> joined the chat`);
+    $('ul').append(`<li class="messages_center"><b>${username}</b> joined the chat<br>`);
   }) 
 
  
@@ -61,7 +61,7 @@ peer.on('open', id => {
 
 socket.on('chat-message',data =>{
   console.log(data.name);
-  $('ul').append(`<li class="message"><b>${data.name}</b>:${data.message}</li>`);
+  $('ul').append(`<li class="messages_left"><b>${data.name}</b>:${data.message}</li>`);
 })
 
 
@@ -111,7 +111,7 @@ const addVideoStream = (video, stream) =>{
     let text=$('input'); 
    if( text.val().length!=0){
     console.log(text.val());
-    $('ul').append(`<li class="message"><b>Me:</b> ${text.val()}</li>`);
+    $('ul').append(`<li class="messages_right"><b>Me:</b> ${text.val()}</li>`);
     socket.emit('message',text.val());
    
     text.val('');
@@ -123,7 +123,7 @@ const addVideoStream = (video, stream) =>{
   $('html').keydown((e) =>{
     if(e.which==13 && text.val().length!=0){
       console.log(text.val());
-      $('ul').append(`<li class="message"><b>Me:<t></b> ${text.val()}</li>`);
+      $('ul').append(`<li class="messages_right"><b>Me:<t></b> ${text.val()}</li>`);
       socket.emit('message',text.val());
      
       text.val('');

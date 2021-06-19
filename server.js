@@ -42,7 +42,7 @@ app.use(auth(config));
 
 
 app.get('/', requiresAuth(),(req,res) => {
-    res.redirect(`/${uuidv4()}`);
+ res.redirect(`/${uuidv4()}`);
 });
 app.get('/:room',(req,res) => {
     res.render("room", {roomID:req.params.room});
