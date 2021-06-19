@@ -115,37 +115,48 @@ height:90vh;
 .main__chat_window {
     flex-grow: 1;
     overflow-y: auto;
+    
 }
 
 .messages{
-    display: flex;
-    flex-direction: column;
-    color:black;
-    list-style: none;
+   
+    width:90%;
+    padding:5px;
+    margin:10px 10px;
+   
 
-    padding-left:10px;
-    margin:5px;
 }
 .messages_center {
     text-align:center;
     clear:both;
-    width:100%;
+    background-color: rgba(137, 43, 226, 0.548);
+    padding:5px;
+    margin:10px 10px;
+   border-radius:15px;
+    
 }
 .messages_right{
-    display: flex;
- text-align: right;
-    clear:both;
-    width:100%;
+  float:right;
+  clear:both;
+  background-color:rgba(255, 255, 255, 0.795);
+  border-radius:15px;
+  padding:5px;
+  margin:10px 10px;
+ 
 }
 .messages_left{
-    display: flex;
-  text-align: left;
-    clear:both;
-    width:60%;
+   float:left;
+   clear:both;
+   background-color:rgba(255, 255, 255, 0.795);
+   padding:5px;
+   margin:10px 10px;
+   border-radius:15px;
+  
+   
 }
 
 .main__message_container {
-    padding: 22px 2px;
+    padding: 10px 2px;
     display: flex;
     border:2px solid black;
 }

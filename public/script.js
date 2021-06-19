@@ -6,7 +6,7 @@ const videoGrid = document.getElementById('video-grid')
 //adding name in chatbox//
 const username = prompt("Please enter your name", "<name goes here>");
 //console.log(username)
-$('ul').append("you joined<br>");
+$('.messages').append(`<div class="messages_center">you joined<br></div>`);
 socket.emit('new-user', username);
 //here it ends//
 
@@ -45,7 +45,7 @@ navigator.mediaDevices.getUserMedia({
 
   socket.on('user-joined', (username) => {
    // console.log("user-name: " + username);
-    $('ul').append(`<li class="messages_center"><b>${username}</b> joined the chat<br>`);
+    $('.messages').append(`<div class="messages_center"><b>${username}</b> joined the chat<br></div>`);
   }) 
 
  
@@ -61,7 +61,7 @@ peer.on('open', id => {
 
 socket.on('chat-message',data =>{
   console.log(data.name);
-  $('ul').append(`<li class="messages_left"><b>${data.name}</b>:${data.message}</li>`);
+  $('.messages').append(`<div class="messages_left"><b>${data.name}</b>:${data.message}</div>`);
 })
 
 
@@ -111,7 +111,7 @@ const addVideoStream = (video, stream) =>{
     let text=$('input'); 
    if( text.val().length!=0){
     console.log(text.val());
-    $('ul').append(`<li class="messages_right"><b>Me:</b> ${text.val()}</li>`);
+    $('.messages').append(`<div class="messages_right"><b>Me:</b> ${text.val()}</div>`);
     socket.emit('message',text.val());
    
     text.val('');
@@ -123,7 +123,7 @@ const addVideoStream = (video, stream) =>{
   $('html').keydown((e) =>{
     if(e.which==13 && text.val().length!=0){
       console.log(text.val());
-      $('ul').append(`<li class="messages_right"><b>Me:<t></b> ${text.val()}</li>`);
+      $('.messages').append(`<div class="messages_right"><b>Me:<t></b> ${text.val()}</div>`);
       socket.emit('message',text.val());
      
       text.val('');
