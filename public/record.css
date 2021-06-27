@@ -1,0 +1,42 @@
+.record_segment{
+  display:flex;
+  justify-content:space-evenly
+}
+ button {
+   background-color:black;
+   color:white;
+  margin: 0 3px 3px 0;
+  padding-left: 2px;
+  padding-right: 2px;
+  width: 75px;
+}
+
+button >a{
+  text-decoration: none;
+}
+button >a:hover{
+  text-decoration: none;
+}
+button:last-of-type {
+  margin: 0px;
+}
+
+p.borderBelow {
+  margin: 0 0 20px 0;
+  padding: 0 0 20px 0;
+}
+
+video {
+  vertical-align: top;
+  --width: 25vw;
+  width: var(--width);
+  height: calc(var(--width) * 0.625);
+}
+
+video:last-of-type {
+  margin: 0 0 20px 0;
+}
+
+video#gumVideo {
+  margin: 0 20px 20px 0;
+}
