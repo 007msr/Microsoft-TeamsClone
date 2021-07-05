@@ -3,18 +3,24 @@
   justify-content:space-evenly
 }
  button {
-   background-color:black;
+ 
+ background-color: black;
+ border-style: none;
    color:white;
   margin: 0 3px 3px 0;
   padding-left: 2px;
   padding-right: 2px;
   width: 75px;
+ 
+}
+#play a{
+  color:white
 }
 
-button >a{
+.play_link{
   text-decoration: none;
 }
-button >a:hover{
+.record_button>a:hover{
   text-decoration: none;
 }
 button:last-of-type {
@@ -26,12 +32,7 @@ p.borderBelow {
   padding: 0 0 20px 0;
 }
 
-video {
-  vertical-align: top;
-  --width: 25vw;
-  width: var(--width);
-  height: calc(var(--width) * 0.625);
-}
+
 
 video:last-of-type {
   margin: 0 0 20px 0;
@@ -39,4 +40,53 @@ video:last-of-type {
 
 video#gumVideo {
   margin: 0 20px 20px 0;
+}
+.record_button{
+  display:none;
+}
+.screen_record_button{
+  display:none;
+}
+#stopscreen a{
+  color:white
+}
+.fa fa-dot-circle-o{
+  font-size: 16px;
+}
+
+.recorded_video{
+  display:flex;
+ 
+ justify-content:space-around;
+ margin-right: 20px;
+  height:90vh;
+
+}
+.recorded_video_user{
+  display:flex;
+flex-direction: column;
+  justify-content:center;
+  align-items:center;
+
+  flex:0.53;
+ 
+}
+.echo{
+  display:none;
+}
+.recorded_video_screen{
+  display:flex;
+ flex-direction:column;
+  justify-content:center;
+  align-items:center;
+
+  flex:0.47
+}
+video#record1{
+  height:400px;
+  width:400px;
+}
+video#recorded{
+  height:400px;
+  width:400px;
 }

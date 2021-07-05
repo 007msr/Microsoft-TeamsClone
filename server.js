@@ -29,6 +29,7 @@ app.use(express.json());
 
 require("dotenv").config();
 const { auth,requiresAuth } = require('express-openid-connect');
+const { EEXIST } = require('constants');
 
 const config = {
   authRequired: false,
@@ -53,19 +54,32 @@ app.use(auth(config));
 
 const history = [];
 app.get("/profile", requiresAuth(),(req,res) => {
-  res.send(JSON.stringify(req.oidc.user));
+  //console.log(req.oidc.user.name+hi);
+  // res.render('home',{
+  //   username:req.oidc.user.name,
+ // });
  
-})
+ res.send(JSON.stringify(req.oidc.user));
+ 
+});
 app.get('/', requiresAuth(),(req,res) => {
  res.redirect(`/${uuidv4()}`);
 });
 app.get('/:room',(req,res) => {
-  console.log(req.params.room);
-    res.render("home", {roomID:req.params.room});
+  //console.log(req.oidc.user.password);
+    res.render("home", {
+      roomID:req.params.room,
+      username:req.oidc.user.name,
+      nickname:req.oidc.user.nickname,
+      picture:req.oidc.user.picture,
+      useremail:req.oidc.user.email,
+      email_verified:req.oidc.user.email_verified
+    });
 });
 
 
 app.post('/send',  function (req, res) {
+ // console.log(req.body);
    
 
   var mailOpts, smtpTrans;
@@ -77,26 +91,26 @@ app.post('/send',  function (req, res) {
       //  port:465,
       // secure:true,
       auth: {
-        user: 'mukesh.19je0540@ee.iitism.ac.in', // generated ethereal user
-        pass: 'Mukesh@130301'  // generated ethereal password
-      }
+        user: req.body.senderemail, // generated ethereal user
+        pass: req.body.password,  // generated ethereal password
+       }
   }));
   const output = `
-  <p>You have a new contact request</p>
-  <h3>Contact Details</h3>
+  <p>You have a new meeting url</p>
+  <h3>Credentials for the new meeting</h3>
   <ul>  
-    <li>Name: ${req.body.subject}</li>
-    <li>Email: ${req.body.email}</li>
+
+    <li>Meeting Link: ${req.body.link}</li>
     
   </ul>
   <h3>Message</h3>
-  <p>${req.body.text}</p>
+  <p>${req.body.msg}</p>
 `;
   //Mail options
   mailOpts = {
-      from: 'mukesh.19je0540@ee.iitism.ac.in', // generated sender address
-      to: req.body.email, // list of receivers
-      subject: req.body.text, // Subject line
+      from:req.body.senderemail,
+      to: req.body.receiveremail, // list of receivers
+      subject: 'Meeting Credentials for the new meeting', //, // Subject line
       text: 'Hello world?', // plain text body
       html: output // html body
   };
@@ -115,7 +129,8 @@ app.post('/send',  function (req, res) {
 });
 
 
-
+ //  
+                 
 
    
 
@@ -146,12 +161,12 @@ io.on('connection',socket => {
       
   
     socket.on('new-user',(username)=>{
-        console.log(username);
+       // console.log(username);
         users[socket.id] =username;
         socket.broadcast.emit('user-joined',username);
     })
     socket.on('join-room',(roomID,userID)=>{
-        console.log("joined room");
+       // console.log("joined room");
      socket.join(roomID);
      socket.broadcast.to(roomID).emit('user-connected',userID);
     
@@ -160,10 +175,25 @@ io.on('connection',socket => {
      })
 
 
-     socket.on('disconnect', (roomID,userID) => {
-        socket.broadcast.to(roomID).emit('user-disconnected', userID)
+    //  socket.on('disconnect', (roomID,userID) => {
+    //     socket.broadcast.to(roomID).emit('user-disconnected', userID)
+    //   })
+    socket.on('disconnect', () =>{
+    socket.broadcast.emit('disconnected',users[socket.id]);
+    
+    delete users[socket.id];
+    })
+    socket.on('video-disconnect', (roomID,userID) =>{
+      socket.broadcast.to(roomID).emit('user-disconnected',userID);
+      delete peers[userID];
+      
+    
       })
     })
+    
+   
+   
+
    
 })
 

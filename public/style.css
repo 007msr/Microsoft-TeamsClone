@@ -44,35 +44,46 @@
 display:flex;
 height:90vh;
 
-margin-right:  20px;
+
+
 
 
 }
-
 #video-grid{
     display: flex;
   flex-direction:row;
- 
+  position: relative;
   
- 
+
  
  }
  video{
     height: 35%;
     width: 40%;
     object-fit: cover;
-
-    padding: 8px;
+    padding: 4px;
     border-radius: 20px;
+    border: 2px solid #6264a7;
+    position: relative;
+    z-index: 1;
+  
  }
+ .user_name{
+     color:white;
+     position:absolute;
+     z-index:2;
+    
 
+ }
+ 
 
 
 .main__videos{
     display: flex;
     justify-content: flex-start;
     align-items: start;
-    padding: 20px;
+    padding: 0px;
+    position: relative;
   
 }
 
@@ -86,6 +97,7 @@ margin-right:  20px;
     padding:20px;
     flex:0.6;
     height:90vh;
+   
     
 }
 
@@ -98,7 +110,8 @@ margin-right:  20px;
     justify-content:space-evenly;
     padding: 2px;
     width:100%;
-    font-size: 10px;
+    font-size: 14px;
+    margin-top: -15px;
     
 }
 
@@ -113,7 +126,7 @@ margin-right:  20px;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 7px 2px;
+    padding: 3px 2px;
     min-width: 90px;
     cursor: pointer;
 }
@@ -125,6 +138,9 @@ margin-right:  20px;
     display: flex;
 
 }
+#shareScreenicon{ 
+    font-size:16px
+}
 
 .main__controls__button:hover {
     background-color:rgba(0, 0, 0, 0.192);
@@ -132,7 +148,7 @@ margin-right:  20px;
 }
 
 .main__controls__button i {
-    font-size: 10px;
+    font-size: 12px;
     text-decoration: none;
 }
 
@@ -140,21 +156,24 @@ margin-right:  20px;
     display: flex;
     flex-direction: column;
     background-color: #f5f6fa;
+    background-color:black;
     border:2px solid black;
     flex:0.32;
     height:90vh;
+    box-shadow: 0 50px 200px #6264a7
 
 }
 
 .main__rightheader {
     padding-top: 5px;
-    color:blueviolet;
+    color:#6264a7;
     text-align: center;
 }
 
 .main__chat_window {
     flex-grow: 1;
     overflow-y: auto;
+
     
 }
 
@@ -169,8 +188,9 @@ margin-right:  20px;
 .messages_center {
     text-align:center;
     clear:both;
-    background-color: rgba(137, 43, 226, 0.548);
+    background-color: #6264a7;
     padding:5px;
+    font-size:10px;
     margin:10px 10px;
    border-radius:15px;
     
@@ -178,12 +198,15 @@ margin-right:  20px;
 .messages_right{
   float:right;
   clear:both;
-  background-color: #6264a7;
- color:white;
+  background-color:black;
+ color:#FFFFFF;
   border-radius:15px;
   padding:5px;
   margin:5px 5px;
  
+}
+#chat_message{
+    background-color:black;
 }
 .messages_left{
    float:left;
@@ -198,22 +221,25 @@ margin-right:  20px;
 }
 
 .main__message_container {
+    display: flex;
     padding: 10px 2px;
     display: flex;
-    border:2px solid black;
-
+ color:white;
+   background-color:black
 }
-
+#emoji_container{ 
+    background-color:black;
+}
 .main__message_container input {
     flex-grow: 1;
     background-color: transparent;
     border: none;
-    color: black;
-   
+ 
+   color:white;
 }
 #icon {
     padding:3px ;
-    color: black;
+    color: white;
 }
 
 .leave_meeting {
@@ -223,7 +249,6 @@ margin-right:  20px;
 .unmute, .stop {
     color: #CC3B33;
 }
-
 
 
 

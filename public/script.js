@@ -15,11 +15,13 @@ socket.emit('new-user', username);
 const peer = new Peer(undefined)
 let myVideoStream;
 const myVideo = document.createElement('video')
-//const name= document.createElement('name');
+//myVideo.innerHTML ="Mukesh";
+
+
 
 
 myVideo.muted = false;
-const peers = {}
+const peers= {}
 
 //const constraintsVideo = {
 //  audio:false,
@@ -44,12 +46,13 @@ navigator.mediaDevices.getUserMedia({
     console.log('answering call');
     call.answer(stream)
     const video = document.createElement('video')
+
     call.on('stream', userVideoStream => {
       addVideoStream(video, userVideoStream)
     })
   })
   peer.on('close',(roomID, userID) => {
-    socket.emit('disconnect', roomID, userID);
+    socket.emit('video-disconnect', roomID, userID);
   })
 
 
@@ -73,24 +76,44 @@ navigator.mediaDevices.getUserMedia({
     console.log(data.name);
     $('.messages').append(`<div class="messages_left"><b>${data.name}</b>:${data.message}</div>`);
   })
-  
-
-
-})
-
-
-
-
-
-const leaveMeeting = () => {
-socket.on('user-disconnected', userID => {
-  console.log("leave-meeting");
-  
-  call.on('close', () => {
-    video.remove()
+  socket.on('disconnected', (username) => {
+   
+    console.log(" disconnected user-name: " + username);
+    $('.messages').append(`<div class="messages_center"><b>${username}</b> left the chat<br></div>`);
+   
+  }) 
+  socket.on("user-disconnected", userID =>{
+    if(peers[userID]){
+      peers[userID].close();
+      video.remove()
+    }
   })
+  
+  // socket.on('initiate', () => {
+  //   //   startStream();
+  //   console.log('i m catching initiate');
+  //   navigator.mediaDevices.getDisplayMedia({video: true})
+  //      .then(handleSuccess1);
+  //    //handleSuccess1();
+  // });
+
+
 })
-}
+
+
+
+
+
+
+// const leaveMeeting = () => {
+// socket.on('user-disconnected', userID => {
+//   console.log("leave-meeting");
+  
+//   call.on('close', () => {
+//     video.remove()
+//   })
+// })
+// }
      
 
 const connectToNewUser= (userID,stream) => {
@@ -120,16 +143,16 @@ const addVideoStream = (video, stream) =>{
       video.play()
     })
     videoGrid.append(video)
- 
+
   }
  
   const sendMessage=(e) =>{
-    let msgtext=$('input');
-    console.log(msgtext);
+    let msgtext=$('#chat_message');
+    console.log(msgtext.val());
    if( msgtext.val().length!=0){
   
     console.log('i m inside sendmesaage fun') 
-    $('.messages').append(`<div class="messages_right"><b>Me:</b> ${msgtext.val()}</div>`);
+    $('.messages').append(`<div class="messages_right"><b>Me:<t></b> ${msgtext.val()}</div>`);
     socket.emit('message',msgtext.val());
    
     msgtext.val('');
@@ -137,7 +160,7 @@ const addVideoStream = (video, stream) =>{
   }
 
 
-  let msgtext=$('input'); 
+  let msgtext=$('input#chat_message'); 
   $('html').keydown((e) =>{
     if(e.which==13 && msgtext.val().length!=0){
       console.log(msgtext);
@@ -192,7 +215,7 @@ const playStop = () => {
   let enabled = myVideoStream.getVideoTracks()[0].enabled;
   if (enabled) {
     myVideoStream.getVideoTracks()[0].enabled = false;
-    
+
     setPlayVideo()
   } else {
     setStopVideo()
@@ -205,8 +228,9 @@ const setStopVideo = () => {
     <i class="fas fa-video"></i>
     <span>Stop Video</span>
   `
+  const name=`<div class="video_name">MUKesh</div>`
   document.querySelector('.main__video_button').innerHTML = html;
-
+  document.querySelector('video').innerHTML = name;
 }
 
 const setPlayVideo = () => {
@@ -217,47 +241,47 @@ const setPlayVideo = () => {
   document.querySelector('.main__video_button').innerHTML = html;
 }
 
-
+wt.onReady(() => console.log('ready'));
 
 
  /*  <--Screen Sharing Code --> */
-  
-  function handleSuccess(stream) {
-    startButton.disabled = true;      
-    const video = document.querySelector('video');
-    video.srcObject = stream;
-  
-    // demonstrates how to detect that the user has stopped
-    // sharing the screen via the browser UI.
-    stream.getVideoTracks()[0].addEventListener('ended', () => {
-      errorMsg('The user has ended sharing the screen');
-      startButton.disabled = false;
-    });
-  }
-  
-  
- const shareScreen = () => {
-    console.log('i m under share screen funtion');
-  const startButton = document.getElementById('startButton');
-  startButton.addEventListener('click', () => {
-    navigator.mediaDevices.getDisplayMedia({video: true})
-        .then(handleSuccess);
+ function handleSuccess(stream) {
+  startButton.disabled = true;      
+  const video = document.querySelector('video');
+  video.srcObject = stream;
+
+  // demonstrates how to detect that the user has stopped
+  // sharing the screen via the browser UI.
+  stream.getVideoTracks()[0].addEventListener('ended', () => {
+    errorMsg('The user has ended sharing the screen');
+    startButton.disabled = false;
   });
 }
 
-  
-  if ((navigator.mediaDevices && 'getDisplayMedia' in navigator.mediaDevices)) {
-    startButton.disabled = false;
-  } else {
-    errorMsg('getDisplayMedia is not supported');
-  }
 
+const shareScreen = () => {
+  console.log('i m under share screen funtion');
+const startButton = document.getElementById('startButton');
+
+startButton.addEventListener('click', () => {
+  navigator.mediaDevices.getDisplayMedia({video: true})
+      .then(handleSuccess);
+});
+}
+
+
+if ((navigator.mediaDevices && 'getDisplayMedia' in navigator.mediaDevices)) {
+  startButton.disabled = false;
+} else {
+  errorMsg('getDisplayMedia is not supported');
+}
   /*  <--Screen Sharing Code ends --> */
 
 
 
   /* <--Screen Recording,Play and Download Code starts--> */
 
+  'use strict'
 
 let mediaRecorder;
 let recordedBlobs;
@@ -313,7 +337,9 @@ function getSupportedMimeTypes() {
     'video/mp4;codecs=h264,aac',
   ];
   return possibleTypes.filter(mimeType => {
+    
     return MediaRecorder.isTypeSupported(mimeType);
+    
   });
 }
 
@@ -332,10 +358,14 @@ function startRecording() {
 
   console.log('Created MediaRecorder', mediaRecorder, 'with options', options);
   recordButton.textContent = 'Stop Recording';
+ 
   playButton.disabled = true;
   downloadButton.disabled = true;
   codecPreferences.disabled = true;
   mediaRecorder.onstop = (event) => {
+    const playButton = document.querySelector('button#play');
+    playButton.style.display = 'block';
+    
     console.log('Recorder stopped: ', event);
     console.log('Recorded Blobs: ', recordedBlobs);
   };
@@ -345,7 +375,10 @@ function startRecording() {
 }
 
 function stopRecording() {
-  mediaRecorder.stop();
+  
+  console.log(mediaRecorder);
+  mediaRecorder?.stop();
+  
 }
 
 function handleSuccess(stream) {
@@ -362,6 +395,7 @@ function handleSuccess(stream) {
     option.innerText = option.value;
     codecPreferences.appendChild(option);
   });
+
   codecPreferences.disabled = false;
 }
 
@@ -379,12 +413,18 @@ async function init(constraints) {
  
 
 const recordButton = document.querySelector('button#record');
+recordButton.style.display = 'visible';
 recordButton.addEventListener('click', () => {
-  if (recordButton.textContent === 'Start Recording') {
+ console.log(recordButton.textContent)
+  if (recordButton.textContent ===  'Start Recording') {
+  console.log('under hai');
     startRecording();
-  } else {
+  
+  } 
+  else {
+  
     stopRecording();
-    recordButton.textContent = 'Start Recording';
+    recordButton.textContent ='Start Recording';
     playButton.disabled = false;
     downloadButton.disabled = false;
     codecPreferences.disabled = false;
@@ -395,13 +435,17 @@ recordButton.addEventListener('click', () => {
 function startRecord(){
 document.querySelector('button#start').addEventListener('click', async () => {
   document.querySelector('button#start').disabled = true;
+  const recordButton = document.querySelector('button#record');
+recordButton.style.display = 'block'
+
   const hasEchoCancellation = document.querySelector('#echoCancellation').checked;
   const constraints = {
     audio: {
       echoCancellation: {exact: hasEchoCancellation}
     },
     video: {
-      width: 1280, height: 720
+      width: 1280, 
+      height: 720
     }
   };
   console.log('Using media constraints:', constraints);
@@ -416,105 +460,26 @@ document.querySelector('button#start').addEventListener('click', async () => {
 
 
 
-  /* WhiteBoard Code Begins */
-  const whitetable = () =>{
 
-    /* Initialise variables */
-    let isDrawing = false;
-    let x = 0;
-    let y = 0;
-    
-let eraseEnable = false;
 
-    /* Get canvas and context */
-    const canvas = document.getElementById('sheet');
-    var context = canvas.getContext('2d');
+ 
 
-    /* Add the event listeners for mousedown, mousemove, and mouseup */
-    canvas.addEventListener('mousedown', e => {
-        /* Drawing begins */
-        x = e.offsetX;
-        y = e.offsetY;
-        isDrawing = true;
-    });
-    
-    canvas.addEventListener('mousemove', e => {
-        /* Drawing continues */
-        if (isDrawing === true) {
-            drawLine(context, x, y, e.offsetX, e.offsetY);
-            x = e.offsetX;
-            y = e.offsetY;
-        }
-    });
-    
-    window.addEventListener('mouseup', e => {
-        /* Drawing ends */
-        if (isDrawing === true) {
-            drawLine(context, x, y, e.offsetX, e.offsetY);
-            x = 0;
-            y = 0;
-            isDrawing = false;
-        }
-    });
+  
 
-    /* Initialise socket */
-   // var socket = io();
 
-    /* Receiving Updates from server */
-    socket.on('update_canvas',function(data){
-        let {x1,y1,x2,y2,color} = JSON.parse(data);
-        drawLine(context,x1,y1,x2,y2,color,true);
-    });
 
-    /* Function to Draw line from (x1,y1) to (x2,y2) */
-    function drawLine(context, x1, y1, x2, y2,color = selected_color,from_server = false) {
 
-        /* Send updates to server (not re-emiting those received from server) */
-        if(!from_server)
-            socket.emit('update_canvas',JSON.stringify({x1,y1,x2,y2,color}));
+  
+
+
+ // $('#chat_message').emojioneArea({
+      
         
-        /* Draw line with color, stroke etc.. */
-        context.beginPath();
-        context.strokeStyle = color;
-        context.lineWidth = 5;
-        context.lineCap = 'round'
-        context.moveTo(x1, y1);
-        context.lineTo(x2, y2);
-        context.stroke();
-        context.closePath();
-        }
-
-     /* helper function to change selected_color
-   triggered onclick buttons below canvas
-   'red','green','blue'
- */
-
-
-}
-let selected_color = 'red';
-function selectColor(color){
-    document.getElementsByClassName(selected_color)[0].classList.remove('selected');
-    document.getElementsByClassName(color)[0].classList.add('selected');    
-    selected_color = color;
-}  
-
-toggleBtn = createButton("Toggle erase");
-  toggleBtn.position(30, 60);
-  toggleBtn.mouseClicked(toggleErase);
-
-  function toggleErase() {
-    if (eraseEnable) {
-      noErase();
-      eraseEnable = false;
-    }
-    else {
-      erase();
-      eraseEnable = true;
-    }
-  }
+    //   pickerPosition: 'top',
+      
+       
+    // })
     
-  function mouseMoved() {
-    fill('red');
-    noStroke();
-    circle(mouseX, mouseY, 50);
-  }
+    
+     
+    // 
