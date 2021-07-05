@@ -4,13 +4,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/emojionearea/3.4.2/emojionearea.css">
+    <title>TEAMS CLONE</title>
+    
     <link rel="stylesheet" href="home.css">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="record.css">
-    <link rel="stylesheet" href="emoji.css">
-    <link rel="stylesheet" href="board.css" />
+    
   
  
    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
@@ -66,7 +65,7 @@ const ROOM_ID="<%= roomID %>"
             <div  class="card ">
               <form autocomplete="off" >
                         <h5 class="card_title">Share Meeting Link By Email</h5>
-                        <input type="text" id="myInput" class="card-text"  value=" https://aqueous-tundra-90520.herokuapp.com/<%= roomID %>"/><button class="copy_button" onclick="myFunction()"><i class="fa fa-copy"></i></button>
+                        <input  id="myInput" class="card-text"  value=" https://aqueous-tundra-90520.herokuapp.com/<%= roomID %>"/><button class="copy_button" onclick="myFunction()"><i class="fa fa-copy"></i></button>
                         <input type="email" id="receiveremail"  placeholder="enter the receiver email address" autocomplete="off"/>
                         <input type="email" id="senderemail"  placeholder="enter your email address" autocomplete="off"/>
                         <input type="text" id="text" placeholder="Want to send any message(optional)" />
@@ -413,8 +412,7 @@ document.querySelector("video#record").src=URL.createObjectURL(
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/emojionearea/3.4.2/emojionearea.min.js"></script>
     
-     <script type="text/javascript">
-    </script>
+     
    
     <script src="script.js" ></script>
    

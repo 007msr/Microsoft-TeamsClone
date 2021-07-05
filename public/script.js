@@ -147,7 +147,7 @@ const addVideoStream = (video, stream) =>{
   }
  
   const sendMessage=(e) =>{
-    let msgtext=$('#chat_message');
+    let msgtext=$('input#chat_message');
     console.log(msgtext.val());
    if( msgtext.val().length!=0){
   

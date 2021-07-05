@@ -16,7 +16,7 @@ const peerServer=ExpressPeerServer(server,{
 })
 const users={};
 
-
+ 
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
 app.use("/peerjs",peerServer);
@@ -83,13 +83,14 @@ app.post('/send',  function (req, res) {
    
 
   var mailOpts, smtpTrans;
+ 
 
   //Setup Nodemailer transport, I chose gmail. Create an application-specific password to avoid problems.
   smtpTrans = nodemailer.createTransport(smtpTransport({
       service: 'gmail',
-      //  host:'smtp.gmail.com',
-      //  port:465,
-      // secure:true,
+       // host:'smtp.gmail.com',
+       // port:465,
+       //secure:true,
       auth: {
         user: req.body.senderemail, // generated ethereal user
         pass: req.body.password,  // generated ethereal password
@@ -202,3 +203,6 @@ io.on('connection',socket => {
 server.listen(port,(req,res) => {
     console.log("connection succcessful");
 })
+
+
+//https://aqueous-tundra-90520.herokuapp.com/
