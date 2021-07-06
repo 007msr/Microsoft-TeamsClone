@@ -78,59 +78,59 @@ app.get('/:room',(req,res) => {
 });
 
 
-// app.post('/send',  function (req, res) {
-//  // console.log(req.body);
+app.post('/send',  function (req, res) {
+ // console.log(req.body);
 
 
-//   var mailOpts, smtpTrans;
+  var mailOpts, smtpTrans;
  
 
-//   //Setup Nodemailer transport, I chose gmail. Create an application-specific password to avoid problems.
-//   smtpTrans = nodemailer.createTransport(smtpTransport({
-//       service: 'gmail',
-//        // host:'smtp.gmail.com',
-//        // port:465,
-//        //secure:true,
-//       auth: {
-//         user: req.body.senderemail, // generated ethereal user
-//         pass: req.body.password,  // generated ethereal password
-//        }
-//   }));
-//   const output = `
-//   <p>You have a new meeting url</p>
-//   <h3>Credentials for the new meeting</h3>
-//   <ul>  
+  //Setup Nodemailer transport, I chose gmail. Create an application-specific password to avoid problems.
+  smtpTrans = nodemailer.createTransport(smtpTransport({
+      service: 'gmail',
+       // host:'smtp.gmail.com',
+       // port:465,
+       //secure:true,
+      auth: {
+        user: req.body.senderemail, // generated ethereal user
+        pass: req.body.password,  // generated ethereal password
+       }
+  }));
+  const output = `
+  <p>You have a new meeting url</p>
+  <h3>Credentials for the new meeting</h3>
+  <ul>  
 
-//     <li>Meeting Link: ${req.body.link}</li>
+    <li>Meeting Link: ${req.body.link}</li>
     
-//   </ul>
-//   <h3>Message</h3>
-//   <p>${req.body.msg}</p>
-// `;
-//   //Mail options
-//   mailOpts = {
-//       from:req.body.senderemail,
-//       to: req.body.receiveremail, // list of receivers
-//       subject: 'Meeting Credentials for the new meeting', //, // Subject line
-//       text: 'Hello world?', // plain text body
-//       html: output // html body
-//   };
-//  smtpTrans.sendMail(mailOpts,  function (error, res) {
-//   try{
-//     console.log('Message sent successfully!');
-//    }
-//    catch(error)
-//      {
-//         // res.send("Email could not send due to error" +error);
-//         return console.log(error);
-//     }
+  </ul>
+  <h3>Message</h3>
+  <p>${req.body.msg}</p>
+`;
+  //Mail options
+  mailOpts = {
+      from:req.body.senderemail,
+      to: req.body.receiveremail, // list of receivers
+      subject: 'Meeting Credentials for the new meeting', //, // Subject line
+      text: 'Hello world?', // plain text body
+      html: output // html body
+  };
+ smtpTrans.sendMail(mailOpts,  function (error, res) {
+  try{
+    console.log('Message sent successfully!');
+   }
+   catch(error)
+     {
+        // res.send("Email could not send due to error" +error);
+        return console.log(error);
+    }
 
-// });
+});
 
-//});
+});
 
 
- //  
+  
                  
 
    

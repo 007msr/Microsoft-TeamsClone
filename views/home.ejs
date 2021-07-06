@@ -10,8 +10,8 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="record.css">
     
-  
- 
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/evo-calendar@1.1.2/evo-calendar/css/evo-calendar.min.css"/>
+     
    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
    <script src="/socket.io/socket.io.js" ></script>
    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
@@ -19,9 +19,9 @@
    <script src="https://kit.fontawesome.com/c939d0e917.js"></script>
     <script src="https://unpkg.com/peerjs@1.3.1/dist/peerjs.min.js" ></script>
     <script type="text/javascript" src="js/jscolor.js"></script>
+<!-- CSS -->
 
 
-  
    
 
 </head>
@@ -45,7 +45,7 @@ const ROOM_ID="<%= roomID %>"
                    
                      <div  class="logout">
                       
-                     <a href="https://aqueous-tundra-90520.herokuapp.com/logout"><i class="fa fa-sign-out" data-toggle="tooltip" data-placement="top" title="Home Page" ></i></a>
+                     <a href="http://localhost:8080/logout"><i class="fa fa-sign-out" data-toggle="tooltip" data-placement="top" title="Home Page" ></i></a>
                     </div>
                   </div>
                 <ul id="menu">
@@ -54,6 +54,7 @@ const ROOM_ID="<%= roomID %>"
                   <a href="#t3"><li class="icon fa fa-dribbble" data-toggle="tooltip" data-placement="top" title="Recorded Video" id="tres"></li></a>
                   <a href="#t4"><li class="icon fas fa-chalkboard-teacher" data-toggle="tooltip" data-placement="top" title="Whiteboard" id="cuatro"></li></a>
                   <a href="#t5"><li class="icon fa fa-user" data-toggle="popover" data-placement="top" title="User Info" data-content="Content" id="cinco"></li></a>
+                 
                  
                 </ul>
    
@@ -225,9 +226,11 @@ const ROOM_ID="<%= roomID %>"
                
 
                   <div class="page" id="p5">
-                   
+                
                      <div class="user">
-                      <div class="user_menu ">
+                      <div id="calendar">
+                        </div>
+                        <div class="user_menu ">
                       <div class="user_menu_image">
                     <div class="profile-pic-div">
                   <img src="https://i1.wp.com/www.winhelponline.com/blog/wp-content/uploads/2017/12/user.png?fit=256%2C256&quality=100" class="user_menu_picture"/>
@@ -255,23 +258,28 @@ const ROOM_ID="<%= roomID %>"
                         <div class="profile-icon">
                     <i class="fab fa-twitter"></i>
                     </div>   
-			        
-	
+			  
+
+
+                     
 	                   	</div>
 		
 		
 		
 		
-	</div>   
+                   	</div>   
 </div>
                         
                         </div>
+
+
+                    
                         </div>
                       </div>
 
                   </div> 
-                </div>
-            </div>
+             
+      
      
 
        
@@ -287,33 +295,7 @@ const ROOM_ID="<%= roomID %>"
        
     }
   </script>
-  <script>
-    const imgDiv = document.querySelector('.profile-pic-div');
-const img = document.querySelector('#photo');
-const file = document.querySelector('#file');
-const uploadBtn = document.querySelector('#uploadBtn');
-
-
-
-file.addEventListener('change', function(){
-    //this refers to file
-    const choosedFile = this.files[0];
-
-    if (choosedFile) {
-
-        const reader = new FileReader(); //FileReader is a predefined function of JS
-
-        reader.addEventListener('load', function(){
-            img.setAttribute('src', reader.result);
-        });
-
-        reader.readAsDataURL(choosedFile);
-
-        //Allright is done
-
-       
-    }
-});</script>
+ 
   <script>
     function myFunction() {
   /* Get the text field */
@@ -330,24 +312,24 @@ file.addEventListener('change', function(){
   alert("Copied the text: " + copyText.value);
 }
 </script>
-// <script>
-//   $('form').on('submit',(e) =>{
-//     e.preventDefault();
-//     const senderemail = $('#senderemail').val().trim();
-//     const receiveremail = $('#receiveremail').val().trim();
-//     const link=$('#myInput').val().trim();
-//     const msg=$('#text').val().trim();
-//     const password = $('#password').val().trim();
+<script>
+  $('form').on('submit',(e) =>{
+    e.preventDefault();
+    const senderemail = $('#senderemail').val().trim();
+    const receiveremail = $('#receiveremail').val().trim();
+    const link=$('#myInput').val().trim();
+    const msg=$('#text').val().trim();
+    const password = $('#password').val().trim();
 
-//     const data = {
-//      senderemail, receiveremail,link,msg,password
-//     };
+    const data = {
+     senderemail, receiveremail,link,msg,password
+    };
 
-//     $.post('/send', data,function(){
-//       console.log("server recieved our data");
-//     })
-//   })
-//   </script>
+    $.post('/send', data,function(){
+      console.log("server recieved our data");
+    })
+  })
+  </script>
   <script>
     const startscreenrecording=  () =>{
      
@@ -390,13 +372,36 @@ document.querySelector("video#record1").src=URL.createObjectURL(
     
     </script>
 
-   <script>
-   
+    <script>
+    const imgDiv = document.querySelector('.profile-pic-div');
+ const img = document.querySelector('#photo');
+const file = document.querySelector('#file');
+ const uploadBtn = document.querySelector('#uploadBtn');
 
 
-   
+
+ file.addEventListener('change', function(){
+
+    const choosedFile = this.files[0];
+
+    if (choosedFile) {
+
+        const reader = new FileReader(); //FileReader is a predefined function of JS
+
+        reader.addEventListener('load', function(){
+            img.setAttribute('src', reader.result);
+        });
+
+        reader.readAsDataURL(choosedFile);
+
     
-    </script>
+
+       
+   }
+});
+</script>      
+	
+
  
   
 
@@ -409,8 +414,22 @@ document.querySelector("video#record1").src=URL.createObjectURL(
       <script src="../../../js/lib/ga.js"></script>
      
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/emojionearea/3.4.2/emojionearea.min.js"></script>
-    
+
+
+<!-- Add jQuery library (required) -->
+
+// <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+// <script src="https://cdn.jsdelivr.net/npm/evo-calendar@1.1.2/evo-calendar/js/evo-calendar.min.js"></script>
+
+//     <script defer src="./evo-calendar/js/evo-calendar.min.js"></script>
+
+
+
+<script>
+
+ 
+</script>
+
      
    
     <script src="script.js" ></script>
