@@ -330,24 +330,24 @@ file.addEventListener('change', function(){
   alert("Copied the text: " + copyText.value);
 }
 </script>
-<script>
-  $('form').on('submit',(e) =>{
-    e.preventDefault();
-    const senderemail = $('#senderemail').val().trim();
-    const receiveremail = $('#receiveremail').val().trim();
-    const link=$('#myInput').val().trim();
-    const msg=$('#text').val().trim();
-    const password = $('#password').val().trim();
+// <script>
+//   $('form').on('submit',(e) =>{
+//     e.preventDefault();
+//     const senderemail = $('#senderemail').val().trim();
+//     const receiveremail = $('#receiveremail').val().trim();
+//     const link=$('#myInput').val().trim();
+//     const msg=$('#text').val().trim();
+//     const password = $('#password').val().trim();
 
-    const data = {
-     senderemail, receiveremail,link,msg,password
-    };
+//     const data = {
+//      senderemail, receiveremail,link,msg,password
+//     };
 
-    $.post('/send', data,function(){
-      console.log("server recieved our data");
-    })
-  })
-  </script>
+//     $.post('/send', data,function(){
+//       console.log("server recieved our data");
+//     })
+//   })
+//   </script>
   <script>
     const startscreenrecording=  () =>{
      
