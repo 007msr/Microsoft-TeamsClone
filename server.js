@@ -175,7 +175,7 @@ io.on('connection',socket => {
         socket.broadcast.emit('chat-message',{message: message, name: users[socket.id]});
      })
 
-
+    })
     //  socket.on('disconnect', (roomID,userID) => {
     //     socket.broadcast.to(roomID).emit('user-disconnected', userID)
     //   })
@@ -190,7 +190,7 @@ io.on('connection',socket => {
       
     
       })
-    })
+   
     
    
    

@@ -227,9 +227,7 @@ height:90vh;
  color:white;
    background-color:black
 }
-#emoji_container{ 
-    background-color:black;
-}
+
 .main__message_container input {
     flex-grow: 1;
     background-color: transparent;

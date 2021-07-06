@@ -281,7 +281,7 @@ if ((navigator.mediaDevices && 'getDisplayMedia' in navigator.mediaDevices)) {
 
   /* <--Screen Recording,Play and Download Code starts--> */
 
-  'use strict'
+
 
 let mediaRecorder;
 let recordedBlobs;
@@ -482,4 +482,4 @@ recordButton.style.display = 'block'
     
     
      
-    // 
+    //   https://aqueous-tundra-90520.herokuapp.com/ 
