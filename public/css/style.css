@@ -179,7 +179,7 @@ video {
 .messages_left {
   float: left;
   clear: both;
-  background-color: rgba(255, 255, 255, 0.795);
+  background-color: #f5f6fa;
   color: black;
   padding: 5px;
   margin: 10px 10px;

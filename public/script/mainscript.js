@@ -3,8 +3,6 @@ const videoGrid = document.getElementById("video-grid");
 
 //adding name in chatbox//
 const username = prompt("Please enter your name", "<name goes here>");
-
-//console.log(username)
 $(".messages").append(`<div class="messages_center">you joined<br></div>`);
 socket.emit("new-user", username);
 //here it ends//
@@ -12,7 +10,6 @@ socket.emit("new-user", username);
 const peer = new Peer(undefined);
 let myVideoStream;
 const myVideo = document.createElement("video");
-//myVideo.innerHTML ="Mukesh";
 
 myVideo.muted = false;
 const peers = {};
@@ -33,6 +30,7 @@ navigator.mediaDevices
     audio: {
       echoCancellation: true,
       noiseSuppression: true,
+      sampleRate: 44100,
     },
     //constraintsVideo,
     //constraintsAudio
@@ -79,10 +77,7 @@ navigator.mediaDevices
         `<div class="messages_left"><b>${data.name}</b>:${data.message}</div>`
       );
     });
-    socket.on("file-message", (data) => {
-      console.log(data);
-      // $(".messages").append(data);
-    });
+
     socket.on("disconnected", (username, userID) => {
       console.log(userID);
       console.log(" disconnected user-name: " + username);
@@ -90,7 +85,6 @@ navigator.mediaDevices
         `<div class="messages_center"><b>${username}</b> left the chat<br></div>`
       );
       if (peers[socket.id]) peers[socket.id].close();
-      console.log("hello ji");
     });
     socket.on("user-disconnected", (userID) => {
       if (peers[userID]) {
@@ -135,20 +129,7 @@ const addVideoStream = (video, stream) => {
   videoGrid.append(video);
 };
 
-const sendMessage = (e) => {
-  let msgtext = $("input#chat_message");
-  console.log(msgtext.val());
-  if (msgtext.val().length != 0) {
-    console.log("i m inside sendmesaage fun");
-    $(".messages").append(
-      `<div class="messages_right"><b>Me:<t></b> ${msgtext.val()}</div>`
-    );
-    socket.emit("message", msgtext.val());
-
-    msgtext.val("");
-  }
-};
-
+//Sending message on pressing enter button//
 let msgtext = $("input#chat_message");
 $("html").keydown((e) => {
   if (e.which == 13 && msgtext.val().length != 0) {
@@ -161,13 +142,14 @@ $("html").keydown((e) => {
     msgtext.val("");
   }
 });
+// ------//
 
 const scrollToBottom = () => {
   var d = $(".main__chat_window");
   d.scrollTop(d.prop("scrollHeight"));
 };
 
-//Mute umNoute our audio
+//Code To Start and Stop our audio and Video//
 
 const muteUnmute = () => {
   const enabled = myVideoStream.getAudioTracks()[0].enabled;
@@ -226,10 +208,12 @@ const setPlayVideo = () => {
   `;
   document.querySelector(".main__video_button").innerHTML = html;
 };
+// Here it ends //
 
 wt.onReady(() => console.log("ready"));
 
 /*  <--Screen Sharing Code --> */
+
 function handleSuccess(stream) {
   startButton.disabled = true;
   const video = document.querySelector("video");
@@ -244,17 +228,10 @@ function handleSuccess(stream) {
 }
 
 const shareScreen = () => {
-  console.log("i m under share screen funtion");
   const startButton = document.getElementById("startButton");
 
   startButton.addEventListener("click", () => {
-    //let currentPeer;
     navigator.mediaDevices.getDisplayMedia({ video: true }).then(handleSuccess);
-    // let videoTrack = stream.getVideoTracks()[0];
-    // let sender = currentPeer.getSenders().find(function (s) {
-    //   return s.track.kind == videoTrack.kind;
-    // });
-    // sender.replaceTrack(videoTrack);
   });
 
   if (navigator.mediaDevices && "getDisplayMedia" in navigator.mediaDevices) {
@@ -264,167 +241,3 @@ const shareScreen = () => {
   }
 };
 /*  <--Screen Sharing Code ends --> */
-
-/* <--Screen Recording,Play and Download Code starts--> */
-
-let mediaRecorder;
-let recordedBlobs;
-
-const codecPreferences = document.querySelector("#codecPreferences");
-
-//const errorMsgElement = document.querySelector('span#errorMsg');
-const recordedVideo = document.querySelector("video#recorded");
-
-const playButton = document.querySelector("button#play");
-playButton.addEventListener("click", () => {
-  const mimeType = codecPreferences.options[
-    codecPreferences.selectedIndex
-  ].value.split(";", 1)[0];
-  const superBuffer = new Blob(recordedBlobs, { type: mimeType });
-  recordedVideo.src = null;
-  recordedVideo.srcObject = null;
-
-  recordedVideo.src = window.URL.createObjectURL(superBuffer);
-  recordedVideo.controls = true;
-  recordedVideo.play();
-});
-
-const downloadButton = document.querySelector("button#download");
-downloadButton.addEventListener("click", () => {
-  const blob = new Blob(recordedBlobs, { type: "video/webm" });
-  const url = window.URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.style.display = "none";
-  a.href = url;
-  a.download = "test.webm";
-  document.body.appendChild(a);
-  a.click();
-  setTimeout(() => {
-    document.body.removeChild(a);
-    window.URL.revokeObjectURL(url);
-  }, 100);
-});
-
-function handleDataAvailable(event) {
-  console.log("handleDataAvailable", event);
-  if (event.data && event.data.size > 0) {
-    recordedBlobs.push(event.data);
-  }
-}
-
-function getSupportedMimeTypes() {
-  const possibleTypes = [
-    "video/webm;codecs=vp9,opus",
-    "video/webm;codecs=vp8,opus",
-    "video/webm;codecs=h264,opus",
-    "video/mp4;codecs=h264,aac",
-  ];
-  return possibleTypes.filter((mimeType) => {
-    return MediaRecorder.isTypeSupported(mimeType);
-  });
-}
-
-function startRecording() {
-  recordedBlobs = [];
-  const mimeType =
-    codecPreferences.options[codecPreferences.selectedIndex].value;
-  const options = { mimeType };
-
-  try {
-    mediaRecorder = new MediaRecorder(window.stream, options);
-  } catch (e) {
-    console.error("Exception while creating MediaRecorder:", e);
-    errorMsgElement.innerHTML = `Exception while creating MediaRecorder: ${JSON.stringify(
-      e
-    )}`;
-    return;
-  }
-
-  console.log("Created MediaRecorder", mediaRecorder, "with options", options);
-  recordButton.textContent = "Stop Recording";
-
-  playButton.disabled = true;
-  downloadButton.disabled = true;
-  codecPreferences.disabled = true;
-  mediaRecorder.onstop = (event) => {
-    const playButton = document.querySelector("button#play");
-    playButton.style.display = "block";
-
-    console.log("Recorder stopped: ", event);
-    console.log("Recorded Blobs: ", recordedBlobs);
-  };
-  mediaRecorder.ondataavailable = handleDataAvailable;
-  mediaRecorder.start();
-  console.log("MediaRecorder started", mediaRecorder);
-}
-
-function stopRecording() {
-  console.log(mediaRecorder);
-  mediaRecorder?.stop();
-}
-
-function handleSuccess(stream) {
-  recordButton.disabled = false;
-  console.log("getUserMedia() got stream:", stream);
-  window.stream = stream;
-
-  const gumVideo = document.querySelector("video");
-  gumVideo.srcObject = stream;
-
-  getSupportedMimeTypes().forEach((mimeType) => {
-    const option = document.createElement("option");
-    option.value = mimeType;
-    option.innerText = option.value;
-    codecPreferences.appendChild(option);
-  });
-
-  codecPreferences.disabled = false;
-}
-
-async function init(constraints) {
-  try {
-    const stream = await navigator.mediaDevices.getUserMedia(constraints);
-    handleSuccess(stream);
-  } catch (e) {
-    console.error("navigator.getUserMedia error:", e);
-    errorMsgElement.innerHTML = `navigator.getUserMedia error:${e.toString()}`;
-  }
-}
-
-const recordButton = document.querySelector("button#record");
-recordButton.style.display = "visible";
-recordButton.addEventListener("click", () => {
-  console.log(recordButton.textContent);
-  if (recordButton.textContent === "Start Recording") {
-    console.log("under hai");
-    startRecording();
-  } else {
-    stopRecording();
-    recordButton.textContent = "Start Recording";
-    playButton.disabled = false;
-    downloadButton.disabled = false;
-    codecPreferences.disabled = false;
-  }
-});
-
-document.querySelector("button#start").addEventListener("click", async () => {
-  document.querySelector("button#start").disabled = true;
-  const recordButton = document.querySelector("button#record");
-  recordButton.style.display = "block";
-
-  const hasEchoCancellation =
-    document.querySelector("#echoCancellation").checked;
-  const constraints = {
-    audio: {
-      echoCancellation: { exact: hasEchoCancellation },
-    },
-    video: {
-      width: 1280,
-      height: 720,
-    },
-  };
-  console.log("Using media constraints:", constraints);
-  await init(constraints);
-});
-
-//   https://aqueous-tundra-90520.herokuapp.com/128566

@@ -10,33 +10,19 @@
     <link rel="stylesheet" href="css/home.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/record.css">
-    
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/evo-calendar@1.1.2/evo-calendar/css/evo-calendar.min.css"/>
-     
    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
    <script src="/socket.io/socket.io.js" ></script>
    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
    <script src="https://kit.fontawesome.com/c939d0e917.js"></script>
     <script src="https://unpkg.com/peerjs@1.3.1/dist/peerjs.min.js" ></script>
-    <script type="text/javascript" src="js/jscolor.js"></script>
-<!-- CSS -->
 
 
-   
 
-</head>
-   
-    
-<script>
-const ROOM_ID="<%= roomID %>"
-
- </script>
-    
-  
 </head>
 <body>
-   
+  <!-- Html Part Begin    --> 
   <div class="ct" id="t1">
     <div class="ct" id="t2">
     <div class="ct" id="t3">
@@ -56,7 +42,11 @@ const ROOM_ID="<%= roomID %>"
        <a href="#t5"><li class="icon fa fa-user-circle-o" data-toggle="popover" data-placement="top" title="User profile" data-content="Content" id="cinco"></li></a>
                  
     </ul>
-   
+ 
+
+
+
+    <!-- Home Section -->
 <div class="page" id="p1">
   <div class="home">
   <div class="home_left">
@@ -71,7 +61,6 @@ const ROOM_ID="<%= roomID %>"
       <input type="text" id="text" placeholder="Want to send any message(optional)" />
       <input type="submit" id="submit" value="Send link By Email"></input>
        <p class="msg1"> OR</p>
-      
       <p class="msg">  Copy link and Share as per your comfort</p>
        <p class="msg1"> Mail will be sent by :   microsoftteams007@gmail.com</p>
       <p class="cardlink"><a href="#t2">Start Video Chat</a></p>
@@ -86,6 +75,9 @@ const ROOM_ID="<%= roomID %>"
           
        </div>
     </div>
+    <!-- Home Sectiom ends -->
+
+    <!-- Video,Chat,ScreenRecording,UserRecording section starts -->
 
 <div class= "page" id = "p2">
     <div class = "main__menu">
@@ -149,7 +141,9 @@ const ROOM_ID="<%= roomID %>"
  <div class="main__right">
    <div class="main__rightheader">
    <h6>Let's Chat..</h6>
+   
    </div>
+   
    <div class = "main__chat_window">
    <div class = "messages">
                          
@@ -178,35 +172,40 @@ const ROOM_ID="<%= roomID %>"
     </div>
     </div>
              
+<!-- Video,Chat,ScreenRecording,UserRecording section ends -->
 
 
-                <div class="page" id="p3">
-                  <div class="recorded_video">
-                    
-                   <div class="recorded_video_screen">
-                    <p class="description">Get ScreenRecording  Here..</p>
-                   <video id="record1" width="1200" height="700" controls></video>
-                  </div>
-                  <div class="recorded_video_user">
-                    <p class="description">Get Your Recorded Video Here..</p>
-                 <video id="recorded"   width="1200" height="300" playsinline loop  ></video>
-                  <button id="download"    disabled>Download</button>
-                  <div  class="echo">
-                  Recording format: <select id="codecPreferences" disabled></select>
-                 </div>
-                 <p class="echo">Echo cancellation: <input type="checkbox" id="echoCancellation" /></p>
-                </div>
-                </div>
-                </div>
+
+<!-- Recorded Video Section starts -->
+
+  <div class="page" id="p3">
+     <div class="recorded_video">
+     <div class="recorded_video_screen">
+     <p class="description">Get ScreenRecording  Here..</p>
+     <video id="record1" width="1200" height="700" controls></video>
+     </div>
+     <div class="recorded_video_user">
+     <p class="description">Get Your Recorded Video Here..</p>
+     <video id="recorded"   width="1200" height="300" playsinline loop  ></video>
+     <button id="download"    disabled>Download</button>
+     <div  class="echo">
+      Recording format: <select id="codecPreferences" disabled></select>
+      </div>
+     <p class="echo">Echo cancellation: <input type="checkbox" id="echoCancellation" /></p>
+      </div>
+      </div>
+      </div>
+<!-- Recorded Video Section ends -->
 
 
-                <div class="page" id="p4">
-                  
-                  <div style="width: 1000px; height: 450px;" id="wt-container"></div>
-                  <script src="https://www.whiteboard.team/dist/api.js"></script>
-  <script type="text/javascript">
-  var wt = new api.WhiteboardTeam('#wt-container', {
-    clientId: '3f60ff71f1d749fb5b2d47e622401c75',
+<!-- Whiteboard Section starts -->
+
+      <div class="page" id="p4">
+      <div style="width: 1000px; height: 450px;" id="wt-container"></div>
+      <script src="https://www.whiteboard.team/dist/api.js"></script>
+      <script type="text/javascript">
+      var wt = new api.WhiteboardTeam('#wt-container', {
+     clientId: '3f60ff71f1d749fb5b2d47e622401c75',
     boardCode: '0a9602c5-5a58-48ab-8082-e1393112d7d5',
     participant: {
       role: 'editor'
@@ -221,12 +220,12 @@ const ROOM_ID="<%= roomID %>"
 </script> 
         
                     
-                </div> 
-
+</div> 
+<!-- Whiteboard Section ends -->
 
    
                
-
+<!-- User Profile Section starts -->
  <div class="page" id="p5">
   <div class="user">
   <div class="user_menu ">
@@ -262,7 +261,7 @@ const ROOM_ID="<%= roomID %>"
   </div>
                         
   </div>
-
+<!-- User Profile Section ends -->
 
                     
   </div>
@@ -271,21 +270,11 @@ const ROOM_ID="<%= roomID %>"
   </div>
   </div>
      
-
+<!--HTML Part over --> 
        
    
-      <script >
-      function myFunc(){
-        const ROOM_ID="<% roomID %>"
-       
-       // console.log(ROOM_ID); 
-       // roomID="https://aqueous-tundra-90520.herokuapp.com/
-        let heading=document.getElementById('cardlink');
-       // heading.innerHTML=ROOM_ID;
-       
-    }
-  </script>
- 
+      
+ <!-- Code to Copy the Link -->
   <script>
     function myFunction() {
   /* Get the text field */
@@ -293,25 +282,21 @@ const ROOM_ID="<%= roomID %>"
 
   /* Select the text field */
   copyText.select();
-  copyText.setSelectionRange(0, 9999); /* For mobile devices */
-
-  /* Copy the text inside the text field */
+  copyText.setSelectionRange(0, 9999);
   document.execCommand("copy");
-
   /* Alert the copied text */
   alert("Copied the text: " + copyText.value);
 }
 </script>
+<!-- Ends here -->
+
+ <!-- Code to Send The Mail to backend -->
 <script>
   $('form').on('submit',(e) =>{
     e.preventDefault();
-  //  const senderemail = $('#senderemail').val().trim();
     const receiveremail = $('#receiveremail').val().trim();
     const link=$('#myInput').val().trim();
     const msg=$('#text').val().trim();
-   // const password = $('#password').val().trim();
-   // senderemail,password
-
     const data = {
     receiveremail,link,msg
     };
@@ -319,107 +304,21 @@ const ROOM_ID="<%= roomID %>"
     $.post('/send', data,function(){
       console.log("server recieved our data");
     })
-  })
-  </script>
+  });
+</script>
+ <!-- Ends here -->
+
   <script>
-    const startscreenrecording=  () =>{
-     
-      const stream =  navigator.mediaDevices.getDisplayMedia({
-        
-          video:{
-                   MediaSource:"screen",
-                 },
+  const ROOM_ID= "<%= roomID %>";
+ </script>   
 
-            // audio:true,
-            
-                 
-        }).then(stream =>{
-          console.log("server recieved our data");
-const data=[];
-const mediaRecorder=new MediaRecorder(stream);
-mediaRecorder.ondataavailable=(e)=>{
-  data.push(e.data);
-}
-mediaRecorder.start();
-mediaRecorder.onstop=(e)=>{
-  const stopscreenrec = document.querySelector('button#stopscreen');
-  stopscreenrec.style.display = 'block';
-
-  console.log("video capture")
-document.querySelector("video#record1").src=URL.createObjectURL(
-  new Blob(data,{
-    type:data[0].type,
-
-  })
-)
-
-}
-   
- 
-
-})    
-    }
-    
-    
-    </script>
-
-    <script>
-const imgDiv = document.querySelector('.profile-pic-div');
-const img = document.querySelector('#photo');
-const file = document.querySelector('#file');
- const uploadBtn = document.querySelector('#uploadBtn');
-
-
-
- file.addEventListener('change', function(){
-
-    const choosedFile = this.files[0];
-
-    if (choosedFile) {
-
-        const reader = new FileReader(); //FileReader is a predefined function of JS
-
-        reader.addEventListener('load', function(){
-            img.setAttribute('src', reader.result);
-        });
-
-        reader.readAsDataURL(choosedFile);
-
-      
-
-       
-   }
-});
-</script>      
-	
-
- 
-  
-
-      
-      
-      
-      
-      
- <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
-   <script src="../../../js/lib/ga.js"></script>
-     
-   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-
-
+ <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>  
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
-
-
-
-
-
-     
-   
-    <script src="script.js" ></script>
-      <script src="script/emoji.js"></script>
-   
-  
-   
+    <script src="script/mainscript.js" ></script>
+    <script src="script/emoji.js"></script>
+     <script src="script/userrecording.js"></script>
+    <script src="script/Screenrecording.js"></script>
+    <script src="script/UserProfile.js"></script>
 </body>
 </html>

@@ -5,6 +5,7 @@ const nodemailer = require("nodemailer");
 const mailGun = require("nodemailer-mailgun-transport");
 var smtpTransport = require("nodemailer-smtp-transport");
 const cron = require("node-cron");
+var a = false;
 
 let alert = require("alert");
 
@@ -42,22 +43,8 @@ const config = {
 // auth router attaches /login, /logout, and /callback routes to the baseURL
 app.use(auth(config));
 
-// req.isAuthenticated is provided from the auth router
-//app.get('/', (req, res) => {
-// res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
-//});
-
-//app.get('/',(req,res) => {
-////    res.render('home');
-//})
-
 const history = [];
 app.get("/profile", requiresAuth(), (req, res) => {
-  //console.log(req.oidc.user.name+hi);
-  // res.render('home',{
-  //   username:req.oidc.user.name,
-  // });
-
   res.send(JSON.stringify(req.oidc.user));
 });
 app.get("/", requiresAuth(), (req, res) => {
@@ -72,10 +59,54 @@ app.get("/:room", (req, res) => {
     picture: req.oidc.user.picture,
     useremail: req.oidc.user.email,
     email_verified: req.oidc.user.email_verified,
-    msg: "Email has been sent successfully",
   });
 });
+io.on("connection", (socket) => {
+  /* New user connected  */
+  console.log("A user connected");
 
+  /* draw all old updates to this user's canvas */
+  console.log('Syncing new user"s canvas from history');
+  for (let item of history) socket.emit("update_canvas", item);
+
+  /* Recieving updates from user */
+  socket.on("update_canvas", function (data) {
+    /* store updates */
+    history.push(data);
+
+    /* send updates to all sockets except sender */
+    socket.broadcast.emit("update_canvas", data);
+  });
+
+  socket.on("new-user", (username) => {
+    // console.log(username);
+    users[socket.id] = username;
+    socket.broadcast.emit("user-joined", username);
+  });
+  socket.on("join-room", (roomID, userID) => {
+    // console.log("joined room");
+    socket.join(roomID);
+    socket.broadcast.to(roomID).emit("user-connected", userID);
+
+    socket.on("message", (message) => {
+      socket.broadcast.emit("chat-message", {
+        message: message,
+        name: users[socket.id],
+      });
+    });
+  });
+
+  socket.on("disconnect", (userID) => {
+    console.log(userID);
+    socket.broadcast.emit("disconnected", users[socket.id], userID);
+
+    delete users[socket.id];
+  });
+  socket.on("video-disconnect", (roomID, userID) => {
+    socket.broadcast.to(roomID).emit("user-disconnected", userID);
+    delete peers[userID];
+  });
+});
 app.post("/send", function (req, res) {
   // console.log(req.body);
 
@@ -116,6 +147,7 @@ app.post("/send", function (req, res) {
   smtpTrans.sendMail(mailOpts, function (error, res) {
     try {
       console.log("Message sent successfully!");
+      var a = true;
 
       alert(
         "Email sent successfully from default email address. Same email also has been sent to your registered email address for verification"
@@ -123,57 +155,6 @@ app.post("/send", function (req, res) {
     } catch (error) {
       return console.log(error);
     }
-  });
-  // res.render("home", { msg: "Email has been sent successfully" });
-});
-//});
-
-io.on("connection", (socket) => {
-  /* New user connected  */
-  console.log("A user connected");
-
-  /* draw all old updates to this user's canvas */
-  console.log('Syncing new user"s canvas from history');
-  for (let item of history) socket.emit("update_canvas", item);
-
-  /* Recieving updates from user */
-  socket.on("update_canvas", function (data) {
-    /* store updates */
-    history.push(data);
-
-    /* send updates to all sockets except sender */
-    socket.broadcast.emit("update_canvas", data);
-  });
-
-  socket.on("new-user", (username) => {
-    // console.log(username);
-    users[socket.id] = username;
-    socket.broadcast.emit("user-joined", username);
-  });
-  socket.on("join-room", (roomID, userID) => {
-    // console.log("joined room");
-    socket.join(roomID);
-    socket.broadcast.to(roomID).emit("user-connected", userID);
-
-    socket.on("message", (message) => {
-      socket.broadcast.emit("chat-message", {
-        message: message,
-        name: users[socket.id],
-      });
-    });
-  });
-  //  socket.on('disconnect', (roomID,userID) => {
-  //     socket.broadcast.to(roomID).emit('user-disconnected', userID)
-  //   })
-  socket.on("disconnect", (userID) => {
-    console.log(userID);
-    socket.broadcast.emit("disconnected", users[socket.id], userID);
-
-    delete users[socket.id];
-  });
-  socket.on("video-disconnect", (roomID, userID) => {
-    socket.broadcast.to(roomID).emit("user-disconnected", userID);
-    delete peers[userID];
   });
 });
 
