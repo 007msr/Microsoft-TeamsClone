@@ -124,7 +124,7 @@ app.post("/send", function (req, res) {
       return console.log(error);
     }
   });
-  res.render("home", { msg: "Email has been sent successfully" });
+  // res.render("home", { msg: "Email has been sent successfully" });
 });
 //});
 
