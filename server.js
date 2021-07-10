@@ -116,7 +116,6 @@ app.post("/send", function (req, res) {
   smtpTrans = nodemailer.createTransport(
     smtpTransport({
       service: "gmail",
-
       auth: {
         user: process.env.EMAIL_ID,
         pass: process.env.PASSWORD,
@@ -142,16 +141,16 @@ app.post("/send", function (req, res) {
     subject: "Meeting Credentials for the new meeting", //, // Subject line
     html: output, // html body
   };
+  let emailmsg = "Mail has been sent successfully";
 
   // cron.schedule(" 01 * * * *", () => {
   smtpTrans.sendMail(mailOpts, function (error, res) {
     try {
       console.log("Message sent successfully!");
-      var a = true;
 
-      alert(
-        "Email sent successfully from default email address. Same email also has been sent to your registered email address for verification"
-      );
+      // alert(
+      //   "Email sent successfully from default email address.
+      // );
     } catch (error) {
       return console.log(error);
     }
@@ -162,4 +161,4 @@ server.listen(port, (req, res) => {
   console.log("connection succcessful");
 });
 
-//   https://aqueous-tundra-90520.herokuapp.com/
+//https://aqueous-tundra-90520.herokuapp.com/

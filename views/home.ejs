@@ -52,7 +52,7 @@
   <div class="home_left">
   <div class="home_left_title"> Microsoft Team</div>
   <div class="home_left_text">Welcomes you <%= username %></div>
-
+ <button  id="home_left_emailtext" class="home_left_text"> Email has been sent &nbsp; <i class="fa fa-check" aria-hidden="true"></i></button>
   <div  class="card ">
     <form autocomplete="off" >
       <h5 class="card_title">Share Meeting Link By Email</h5>
@@ -297,9 +297,14 @@
     const data = {
     receiveremail,link,msg
     };
-
+ const emailtext = document.querySelector("button#home_left_emailtext");
+      emailtext.style.display = "flex";
+  
+      
     $.post('/send', data,function(){
+       
       console.log("server recieved our data");
+     
     })
   });
 </script>
@@ -308,6 +313,7 @@
   <script>
   const ROOM_ID= "<%= roomID %>";
  </script>   
+
 
  <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>  
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

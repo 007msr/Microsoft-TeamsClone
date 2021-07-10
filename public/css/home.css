@@ -304,7 +304,20 @@ ul {
   font-size: 20px;
   padding-left: 20px;
   padding-right: 20px;
+  margin-bottom: 25px;
+}
+#home_left_emailtext {
+  display: none;
+  background-color: #f5f6fa;
+  color: black;
+  width: 100%;
+  font-weight: 400;
+  font-size: 16px;
+  padding-left: 20px;
+  padding-right: 20px;
+
   margin-bottom: 30px;
+  margin-top: -10px;
 }
 .home_right {
   display: flex;
