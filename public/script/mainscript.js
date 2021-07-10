@@ -22,8 +22,7 @@ let currentPeer;
 //const constraintsAudio = {
 ////  audio:true,
 //}
-// const startVideo = document.getElementById("dos");
-// startVideo.addEventListener("click", () => {
+
 navigator.mediaDevices
   .getUserMedia({
     video: true,
@@ -32,8 +31,6 @@ navigator.mediaDevices
       noiseSuppression: true,
       sampleRate: 44100,
     },
-    //constraintsVideo,
-    //constraintsAudio
   })
   .then((stream) => {
     myVideoStream = stream;

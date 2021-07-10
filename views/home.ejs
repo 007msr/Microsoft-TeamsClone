@@ -108,9 +108,9 @@
 
     <div class = "main__controls__block main__controls__button ">           
     <div  class = "record_segment">
-     <div class = "xyz">
+     <div class = "xyz" onclick="user_recording()">
    <button id = "start" ><i class = "fa fa-camera-retro " id= "shareScreenicon" data-toggle = "tooltip" data-placement = "top" title = " Click To record your video and audio " aria-hidden = "true"></i></button>
-   <span class = "xyz_record">RecordUser</span>
+   <span class = "xyz_record" id="recorduser">RecordUser</span>
       </div>
     <button id = "record" class = "record_button" disabled >Start Recording </button>
     <button id = "play"  class = "record_button" disabled ><a href = "#t3" class = "play_link"> Play</a></button>
@@ -118,16 +118,13 @@
     </div>
                         
                                
-        <div class = "main__controls__button main__controls__block">
-            <div class = "record_segment">
-              <div class = "xyz">
-            <button id  = "setscreen"  onclick = "startscreenrecording()" ><i class = "fa fa-dot-circle-o"  id = "shareScreenicon" data-toggle = "tooltip" data-placement = "top" title = "start screen recording" aria-hidden = "true"></i></button>
-            <span>RecordScreen</span>
-               </div>
-            <button id  = "stopscreen" class   = "screen_record_button" disabled ><a href = "#t3" class = "play_link">Play</a> </button>
-            
-           
-         
+      <div class = "main__controls__button main__controls__block">
+        <div class = "record_segment">
+        <div class = "xyz"  onclick = "startscreenrecording()">
+        <button id  = "setscreen"  ><i class = "fa fa-dot-circle-o"  id = "shareScreenicon" data-toggle = "tooltip" data-placement = "top" title = "start screen recording" aria-hidden = "true"></i></button>
+        <span>RecordScreen</span>
+        </div>
+        <button id  = "stopscreen" class   = "screen_record_button" disabled ><a href = "#t3" class = "play_link">Play</a> </button>
              </div>
          </div>
                

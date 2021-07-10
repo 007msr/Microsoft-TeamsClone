@@ -128,7 +128,7 @@ ul .icon:hover {
 ul {
   position: fixed;
   z-index: 1;
-  top: 40px;
+  top: 20px;
   bottom: 0;
   left: 20px;
   margin: auto;
@@ -137,10 +137,12 @@ ul {
   padding: 10px;
   display: flex;
   flex-direction: column;
+  justify-content: space-evenly;
+  margin-bottom: 10px;
 }
 
 #menu .icon {
-  margin: 25px 0px;
+  margin: 25px 10px;
   transition: all 0.5s ease-out !important;
   -webkit-transition: all 0.5s ease-out;
   -moz-transition: all 0.5s ease-out;
@@ -317,11 +319,7 @@ ul {
 #myInput {
   width: 70%;
 }
-#senderemail {
-  width: 93%;
-  margin: 5px;
-  margin-left: 6px;
-}
+
 #receiveremail {
   width: 93%;
   margin: 5px;
@@ -332,11 +330,7 @@ ul {
   margin: 5px;
   margin-left: 6px;
 }
-#password {
-  width: 93%;
-  margin: 5px;
-  margin-left: 6px;
-}
+
 #submit {
   margin-left: 120px;
 }

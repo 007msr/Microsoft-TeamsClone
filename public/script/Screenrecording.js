@@ -4,8 +4,6 @@ const startscreenrecording = () => {
       video: {
         MediaSource: "screen",
       },
-
-      // audio:true,
     })
     .then((stream) => {
       console.log("server recieved our data");

@@ -137,9 +137,12 @@ recordButton.addEventListener("click", () => {
     codecPreferences.disabled = false;
   }
 });
-
-document.querySelector("button#start").addEventListener("click", async () => {
+const user_recording = async () => {
   document.querySelector("button#start").disabled = true;
+  const startbutton = document.querySelector("button#start");
+  startbutton.style.display = "none";
+  const starttext = document.querySelector("span#recorduser");
+  starttext.style.display = "none";
   const recordButton = document.querySelector("button#record");
   recordButton.style.display = "block";
 
@@ -156,5 +159,5 @@ document.querySelector("button#start").addEventListener("click", async () => {
   };
   console.log("Using media constraints:", constraints);
   await init(constraints);
-});
+};
 /* <--UserRecording,Play and Download Code ends--> */
