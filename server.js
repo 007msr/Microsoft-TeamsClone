@@ -141,7 +141,6 @@ app.post("/send", function (req, res) {
     subject: "Meeting Credentials for the new meeting", //, // Subject line
     html: output, // html body
   };
-  let emailmsg = "Mail has been sent successfully";
 
   // cron.schedule(" 01 * * * *", () => {
   smtpTrans.sendMail(mailOpts, function (error, res) {

@@ -298,9 +298,12 @@
     const data = {
     receiveremail,link,msg
     };
- const emailtext = document.querySelector("button#home_left_emailtext");
+   const submitButton=document.querySelector("input#submit");
+submitButton.addEventListener("click", () => {
+    const emailtext = document.querySelector("button#home_left_emailtext");
       emailtext.style.display = "flex";
-  
+
+});
       
     $.post('/send', data,function(){
        
