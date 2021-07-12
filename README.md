@@ -13,6 +13,7 @@ A real-time communication website which allows peers to video call and chat with
 - Screen Recording
 - User Autehentication
 - Dynamic Profile_Page with all details of Users.
+- User can set his photo.
 - Real-Time Collabrative Whiteboard
 - Real-Time Chat (emoji features also included)
 - Send Meeting Link By Email.
