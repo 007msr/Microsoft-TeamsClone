@@ -108,6 +108,7 @@ const connectToNewUser = (userID, stream) => {
   const video = document.createElement("video");
   call.on("stream", (userVideoStream) => {
     addVideoStream(video, userVideoStream);
+    currentPeer = call.peerConnection;
   });
 
   call.on("close", () => {
@@ -120,6 +121,7 @@ const connectToNewUser = (userID, stream) => {
 const addVideoStream = (video, stream) => {
   console.log("my video appended");
   video.srcObject = stream;
+
   video.addEventListener("loadedmetadata", () => {
     video.play();
   });
@@ -211,30 +213,41 @@ wt.onReady(() => console.log("ready"));
 
 /*  <--Screen Sharing Code --> */
 
-function handleSuccess(stream) {
-  startButton.disabled = true;
-  const video = document.querySelector("video");
-  video.srcObject = stream;
-
-  // demonstrates how to detect that the user has stopped
-  // sharing the screen via the browser UI.
-  stream.getVideoTracks()[0].addEventListener("ended", () => {
-    errorMsg("The user has ended sharing the screen");
-    startButton.disabled = false;
-  });
-}
-
 const shareScreen = () => {
-  const startButton = document.getElementById("startButton");
+  // @ts-ignore
+  // const startButton = document.getElementById("startButton");
+  // startButton.addEventListener("click", () => {
+  navigator.mediaDevices
+    .getDisplayMedia({
+      video: {
+        cursor: "always",
+      },
+      audio: {
+        echoCancellation: true,
+        noiseSuppression: true,
+      },
+    })
+    .then((stream) => {
+      const videoTrack = stream.getVideoTracks()[0];
 
-  startButton.addEventListener("click", () => {
-    navigator.mediaDevices.getDisplayMedia({ video: true }).then(handleSuccess);
-  });
-
-  if (navigator.mediaDevices && "getDisplayMedia" in navigator.mediaDevices) {
-    startButton.disabled = false;
-  } else {
-    errorMsg("getDisplayMedia is not supported");
-  }
+      videoTrack.onended = () => {
+        const videoTrack = stream;
+        // //const videoTrack = this.lazyStream.getVideoTracks()[0];
+        const sender = currentPeer
+          .getSenders()
+          .find((s) => s.track.kind === videoTrack.kind);
+        sender?.replaceTrack(videoTrack);
+      };
+      //console.log(currentPeer);
+      // const sender = this.currentPeer
+      const sender = currentPeer
+        .getSenders()
+        .find((s) => s.track.kind === videoTrack.kind);
+      sender?.replaceTrack(videoTrack);
+    })
+    .catch((err) => {
+      console.log("Unable to get display media " + err);
+    });
 };
+
 /*  <--Screen Sharing Code ends --> */
