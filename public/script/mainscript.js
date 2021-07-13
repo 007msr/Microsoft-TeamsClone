@@ -71,7 +71,7 @@ navigator.mediaDevices
     socket.on("chat-message", (data) => {
       console.log(data.name);
       $(".messages").append(
-        `<div class="messages_left"><span> <img src="https://i1.wp.com/www.winhelponline.com/blog/wp-content/uploads/2017/12/user.png?fit=256%2C256&quality=100" class="chat_pic" /><b>${data.name}</b>:${data.message}</div>`
+        `<div class="messages_left"><span> <img src="https://i1.wp.com/www.winhelponline.com/blog/wp-content/uploads/2017/12/user.png?fit=256%2C256&quality=100" class="chat_pic" /><b>${data.name}</b>:&nbsp${data.message}</div>`
       );
     });
     socket.on("raised-hand", (data) => {
@@ -131,7 +131,7 @@ $("html").keydown((e) => {
   if (e.which == 13 && msgtext.val().length != 0) {
     console.log(msgtext);
     $(".messages").append(
-      `<div class="messages_right"><span> <img src="https://i1.wp.com/www.winhelponline.com/blog/wp-content/uploads/2017/12/user.png?fit=256%2C256&quality=100" class="chat_pic" /></span><b>Me:<t></b> ${msgtext.val()}</div>`
+      `<div class="messages_right"><span> <img src="https://i1.wp.com/www.winhelponline.com/blog/wp-content/uploads/2017/12/user.png?fit=256%2C256&quality=100" class="chat_pic" /></span><b>Me:&nbsp</b> ${msgtext.val()}</div>`
     );
     socket.emit("message", msgtext.val());
 
