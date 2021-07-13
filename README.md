@@ -29,7 +29,7 @@ node server.js
 
 ## Demo
 
-Link to the Website: https://aqueous-tundra-90520.herokuapp.com/
+Link to the Website: https://aqueous-tundra-90520.herokuapp.com
 
 ## Authors
 
