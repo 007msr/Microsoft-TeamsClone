@@ -16,6 +16,7 @@ A real-time communication website which allows peers to video call and chat with
 - User can set his photo.
 - Real-Time Collabrative Whiteboard
 - Real-Time Chat (emoji features also included)
+- Can Raise Our Hand
 - Send Meeting Link By Email.
 
 ## Install

@@ -94,6 +94,11 @@ io.on("connection", (socket) => {
         name: users[socket.id],
       });
     });
+    socket.on("raise-hand", () => {
+      socket.broadcast.emit("raised-hand", {
+        name: users[socket.id],
+      });
+    });
   });
 
   socket.on("disconnect", (userID) => {
@@ -128,6 +133,7 @@ app.post("/send", function (req, res) {
   <ul>  
 
     <li>Meeting Link: ${req.body.link}</li>
+    <li>If it shows internal error,click on this link https://aqueous-tundra-90520.herokuapp.com/ and get yourself authorized first and share</li>
     
   </ul>
   <h3>Message</h3>

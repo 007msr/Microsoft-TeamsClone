@@ -1,3 +1,4 @@
+/* this page includes css for video and chat section page */
 .main {
   display: flex;
   flex-direction: column;
@@ -159,7 +160,7 @@ video {
   clear: both;
   background-color: #6264a7;
   padding: 5px;
-  font-size: 10px;
+  font-size: 12px;
   margin: 10px 10px;
   border-radius: 15px;
 }
@@ -171,6 +172,7 @@ video {
   border-radius: 15px;
   padding: 5px;
   margin: 5px 5px;
+  font-size: 16px;
 }
 #chat_message {
   background-color: black;
@@ -184,6 +186,7 @@ video {
   padding: 5px;
   margin: 10px 10px;
   border-radius: 15px;
+  font-size: 16px;
 }
 
 .main__message_container {
@@ -224,4 +227,17 @@ video {
 .xyz {
   display: flex;
   flex-direction: column;
+}
+.chat_pic {
+  height: 18px;
+  width: 18px;
+  margin-right: 6px;
+}
+.raisehand {
+  background-color: black;
+  color: yellow;
+  font-size: 12px;
+}
+.raisehand_header {
+  margin-left: 40px;
 }

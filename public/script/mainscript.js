@@ -71,7 +71,13 @@ navigator.mediaDevices
     socket.on("chat-message", (data) => {
       console.log(data.name);
       $(".messages").append(
-        `<div class="messages_left"><b>${data.name}</b>:${data.message}</div>`
+        `<div class="messages_left"><span> <img src="https://i1.wp.com/www.winhelponline.com/blog/wp-content/uploads/2017/12/user.png?fit=256%2C256&quality=100" class="chat_pic" /><b>${data.name}</b>:${data.message}</div>`
+      );
+    });
+    socket.on("raised-hand", (data) => {
+      console.log(data.name);
+      $(".messages").append(
+        `<div class="messages_center raisehand "><b>${data.name}&nbsp </b>raised his hand &nbsp<i class="fa fa-hand-paper-o" aria-hidden="true"></i></div>`
       );
     });
 
@@ -83,6 +89,7 @@ navigator.mediaDevices
       );
       if (peers[socket.id]) peers[socket.id].close();
     });
+
     socket.on("user-disconnected", (userID) => {
       if (peers[userID]) {
         peers[userID].close();
@@ -90,16 +97,6 @@ navigator.mediaDevices
       }
     });
   });
-
-// const leaveMeeting = () => {
-// socket.on('user-disconnected', userID => {
-//   console.log("leave-meeting");
-
-//   call.on('close', () => {
-//     video.remove()
-//   })
-// })
-// }
 
 const connectToNewUser = (userID, stream) => {
   console.log("new user connected");
@@ -134,13 +131,19 @@ $("html").keydown((e) => {
   if (e.which == 13 && msgtext.val().length != 0) {
     console.log(msgtext);
     $(".messages").append(
-      `<div class="messages_right"><b>Me:<t></b> ${msgtext.val()}</div>`
+      `<div class="messages_right"><span> <img src="https://i1.wp.com/www.winhelponline.com/blog/wp-content/uploads/2017/12/user.png?fit=256%2C256&quality=100" class="chat_pic" /></span><b>Me:<t></b> ${msgtext.val()}</div>`
     );
     socket.emit("message", msgtext.val());
 
     msgtext.val("");
   }
 });
+function RaiseHand() {
+  $(".messages").append(
+    `<div class="messages_center raisehand"><b> ME raised the hand &nbsp <i class="fa fa-hand-paper-o" aria-hidden="true"></i></div>`
+  );
+  socket.emit("raise-hand");
+}
 // ------//
 
 const scrollToBottom = () => {
@@ -214,9 +217,6 @@ wt.onReady(() => console.log("ready"));
 /*  <--Screen Sharing Code --> */
 
 const shareScreen = () => {
-  // @ts-ignore
-  // const startButton = document.getElementById("startButton");
-  // startButton.addEventListener("click", () => {
   navigator.mediaDevices
     .getDisplayMedia({
       video: {
