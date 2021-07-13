@@ -1,6 +1,6 @@
 # Microsoft-Teams-Clone
 
-A real-time communication website which allows peers to video call and chat with each other with many more extra functionalities.
+A real-time communication website which allows peers to video call and chat with each other with many more extra functionalities using webrtc ,nodejs and socket.io.
 
 ## Functionalities
 
@@ -11,13 +11,13 @@ A real-time communication website which allows peers to video call and chat with
 - Screen Sharing
 - User Video & Audio Recording
 - Screen Recording
-- User Autehentication
+- User Authentication(using Auth0)
 - Dynamic Profile_Page with all details of Users.
 - User can set his photo.
 - Real-Time Collabrative Whiteboard
 - Real-Time Chat (emoji features also included)
 - Can Raise Our Hand
-- Send Meeting Link By Email.
+- Send Meeting Link By Email.(using Nodemailer)
 
 ## Install
 
